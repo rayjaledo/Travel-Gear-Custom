@@ -1,0 +1,140 @@
+contactus.html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Travel Gear Custom</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background: orange;
+            color: black;
+            padding: 20px;
+            font-size: 15px;
+        }
+        nav {
+            background: darkgray;
+            padding: 10px;
+        }
+        nav a {
+            color: black;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 18px;
+            margin: 5px;
+            display: inline-block;
+        }
+        nav a:hover {
+            background-color: #bbb;
+            border-radius: 5px;
+        }
+        .contact-container {
+            max-width: 800px;
+            margin: 40px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+        }
+        .contact-info, .contact-form {
+            flex: 1;
+            min-width: 300px;
+            text-align: left;
+            padding: 20px;
+        }
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .contact-form textarea {
+            height: 120px;
+        }
+        .btn {
+            display: inline-block;
+            background: orange;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: yellow;
+            color: black;
+        }
+        footer {
+            background: orange;
+            color: black;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Travel Gear Custom</h1>
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="aboutus.html">About</a>
+            <a href="contactus.html">Contact</a>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Contact Us</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p>Have questions about our products or need assistance with an order? We're here to help!</p>
+
+                <h4>Customer Service Hours</h4>
+                <p>Monday-Friday: 9am-6pm <br>
+                Saturday: 10am-4pm <br>
+                Sunday: Closed</p>
+
+                <h4>Contact Information</h4>
+                <p><strong>Phone:</strong> +63 203651893<br>
+                <strong>Email:</strong>  rayjaledo60@gmail.com<br>
+                <strong>Address:</strong> City of Naga Cebu </p>
+            </div>
+
+            <div class="contact-form">
+                <h3>Send Us a Message</h3>
+                <form action="#" method="post">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <select name="subject" required>
+                        <option value="">Select a subject</option>
+                        <option value="order">Order Inquiry</option>
+                        <option value="product">Product Question</option>
+                        <option value="return">Returns/Exchanges</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <textarea name="message" placeholder="Your Message" required></textarea>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Travel Gear Custom. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
