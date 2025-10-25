@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Products - Travel Gear Custom</title>
+    <title>Products</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background: #f2f2f2;
             margin: 0;
             padding: 0;
-            text-align: center;
         }
         header {
             background: orange;
             color: black;
             padding: 20px;
-            font-size: 15px;
+            text-align: center;
         }
         nav {
             background: darkgray;
@@ -33,122 +33,129 @@
             background-color: #bbb;
             border-radius: 5px;
         }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 30px;
+        }
         .product-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            padding: 20px;
             gap: 30px;
+            padding: 20px;
         }
-        .product-card {
-            width: 250px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        .product {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            width: 220px;
         }
-        .product-card img {
+        .product img {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
-            border-radius: 5px;
+            border-radius: 8px;
         }
-        .price {
-            font-weight: bold;
-            color: orange;
-            font-size: 1.2em;
+        .product h3 {
+            margin: 10px 0 5px;
         }
-        .btn {
-            display: inline-block;
-            background: orange;
+        .product p {
+            color: #666;
+        }
+        button {
+            background: #007BFF;
+            border: none;
             color: white;
-            padding: 8px 15px;
-            text-decoration: none;
-            margin-top: 10px;
+            padding: 10px 15px;
             border-radius: 5px;
-            font-weight: bold;
-            transition: background 0.3s;
+            cursor: pointer;
         }
-        .btn:hover {
-            background: yellow;
-            color: black;
+        button:hover {
+            background: #0056b3;
         }
         footer {
             background: orange;
             color: black;
-            padding: 20px;
-            margin-top: 20px;
-            font-size: 14px;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Travel Gear Custom</h1>
-        <nav>
-            <a href="/home">Home</a>
-            <a href="/products">Products</a>
-            <a href="/aboutus">About</a>
-            <a href="/contactus">Contact</a>
-            <a href="/cart">Cart</a>
-        </nav>
-    </header>
+<header>
+    <div class="logo" style="position:absolute; top:10px; left:20px;">
+        <a href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='logo.jpg') }}" width="150" height="95" alt="Logo">
+        </a>
+    </div>    <h1>Travel Gear Custom</h1>
+    <nav>
+  <a href="{{ url_for('home') }}">Home</a>
+  <a href="{{ url_for('products') }}">Products</a>
+  <a href="{{ url_for('aboutus') }}">About Us</a>
+  <a href="{{ url_for('contactus') }}">Contact Us</a>
+  <a href="{{ url_for('cart') }}">Cart</a>
+</nav>
 
-    <section>
-        <h2>Our Premium Travel Gear</h2>
-        <div class="product-container">
-            <div class="product-card">
-                <img src="/static/images/product1.jpg" alt="Travel Backpack">
-                <h3>Explorer Backpack</h3>
-                <p>40L waterproof backpack with USB charging port</p>
-                <p class="price">$89.99</p>
-                <form method="POST" action="/add_to_cart">
-                    <input type="hidden" name="product" value="Explorer Backpack">
-                    <input type="hidden" name="price" value="89.99">
-                    <button type="submit" class="btn">Add to Cart</button>
-                </form>
-            </div>
+</header>
 
-            <div class="product-card">
-                <img src="/static/images/product2.jpg" alt="Rolling Luggage">
-                <h3>Premium Roller</h3>
-                <p>Hardside spinner luggage with TSA lock</p>
-                <p class="price">$149.99</p>
-                <form method="POST" action="/add_to_cart">
-                    <input type="hidden" name="product" value="Premium Roller">
-                    <input type="hidden" name="price" value="149.99">
-                    <button type="submit" class="btn">Add to Cart</button>
-                </form>
-            </div>
+<h1>Our Products</h1>
 
-            <div class="product-card">
-                <img src="/static/images/product3.jpg" alt="Travel Pillow">
-                <h3>Memory Foam Neck Pillow</h3>
-                <p>Ergonomic support for long flights</p>
-                <p class="price">$29.99</p>
-                <form method="POST" action="/add_to_cart">
-                    <input type="hidden" name="product" value="Memory Foam Neck Pillow">
-                    <input type="hidden" name="price" value="29.99">
-                    <button type="submit" class="btn">Add to Cart</button>
-                </form>
-            </div>
+<div class="product-container">
+    <div class="product">
+        <img src="{{ url_for('static', filename='product1.jpg') }}" alt="Product 1">
+        <h3>Product 1</h3>
+        <p>₱150.00</p>
+        <form action="{{ url_for('add_to_cart') }}" method="POST">
+            <input type="hidden" name="product" value="Product 1">
+            <input type="hidden" name="price" value="150">
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
 
-            <div class="product-card">
-                <img src="/static/images/product4.jpg" alt="Packing Cubes">
-                <h3>Packing Cube Set</h3>
-                <p>5-piece compression packing system</p>
-                <p class="price">$39.99</p>
-                <form method="POST" action="/add_to_cart">
-                    <input type="hidden" name="product" value="Packing Cube Set">
-                    <input type="hidden" name="price" value="39.99">
-                    <button type="submit" class="btn">Add to Cart</button>
-                </form>
-            </div>
-        </div>
-    </section>
+    <div class="product">
+        <img src="{{ url_for('static', filename='product2.jpg') }}" alt="Product 2">
+        <h3>Product 2</h3>
+        <p>₱200.00</p>
+        <form action="{{ url_for('add_to_cart') }}" method="POST">
+            <input type="hidden" name="product" value="Product 2">
+            <input type="hidden" name="price" value="200">
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
 
-    <footer>
-        <p>&copy; 2025 Travel Gear Custom. All Rights Reserved.</p>
-    </footer>
+    <div class="product">
+        <img src="{{ url_for('static', filename='product3.jpg') }}" alt="Product 3">
+        <h3>Product 3</h3>
+        <p>₱250.00</p>
+        <form action="{{ url_for('add_to_cart') }}" method="POST">
+            <input type="hidden" name="product" value="Product 3">
+            <input type="hidden" name="price" value="250">
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
+
+    <div class="product">
+        <img src="{{ url_for('static', filename='product4.jpg') }}" alt="Product 4">
+        <h3>Product 4</h3>
+        <p>₱300.00</p>
+        <form action="{{ url_for('add_to_cart') }}" method="POST">
+            <input type="hidden" name="product" value="Product 4">
+            <input type="hidden" name="price" value="300">
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 Travel Gear Custom. All Rights Reserved.</p>
+</footer>
+
 </body>
 </html>
