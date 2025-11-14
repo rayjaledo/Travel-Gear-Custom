@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Gear Custom</title>
+    <title>TRAVEL GEAR CUSTOM</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,44 +27,55 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 24px;
-            margin: 50;
+            font-size: initial; /* ✅ valid */
+            display: revert-layer; /* ❌ invalid for 'display' */
+
         }
         nav {
             background: darkgray;
             padding: 10px;
         }
-        nav a {
-            color: black;
-            text-decoration: none;
-            padding: 10px 15px;
-            font-size: 18px;
-            margin: 5px;
-            display: inline-block;
-        }
-        nav a:hover {
-            background-color: #bbb;
-            border-radius: 5px;
-        }
+       nav a {
+    color: white; /* ✅ Default text color is white */
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    margin: 5px;
+    display: inline-block;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    transition: background 0.3s, color 0.3s;
+}
+
+nav a:hover {
+    background-color: yellow; /* 🟨 Background turns yellow */
+    color: black;              /* 🔲 Text turns black */
+}
+
+
+
         .auth-links {
             position: absolute;
             top: 20px;
             right: 20px;
         }
         .auth-links a {
-            color: black;
-            text-decoration: none;
-            font-size: 16px;
-            margin-left: 10px;
-            padding: 8px 12px;
-            background: yellow;
-            border: 1px solid black;
-            border-radius: 5px;
-        }
-        .auth-links a:hover {
-            background: black;
-            color: white;
-        }
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    margin-left: 10px;
+    padding: 12px 25px;
+    background: orange;
+    border: 2px solid lightgray; /* Black border to distinguish */
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+.auth-links a:hover {
+    background: yellow;
+    color: black;
+}
+
         .hero {
             padding: 80px 20px;
             background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)),
@@ -117,11 +128,25 @@
     <div class="logo">
         <img src="{{ url_for('static', filename='logo.jpg') }}" width="150" height="100" alt="Logo">
     </div>
-    <h2>Travel Gear Custom</h2>
-    <div class="auth-links">
-        <a href="/signup">Sign Up</a>
-        <a href="/login">Login</a>
-    </div>
+    <h2>TRAVEL GEAR CUSTOM</h2>
+     <div style="position:absolute; top:20px; right:20px; display: flex; align-items: center; gap: 10px;">
+  {% if 'username' in session %}
+    <span style="padding: 8px 12px; background: orange; color: white; border: 1px solid lightgray; border-radius: 5px; font-weight: bold;">
+      Welcome, {{ session['username'] }}!
+    </span>
+    <a href="{{ url_for('logout') }}" style="padding: 8px 12px; background: orange; color: white; border: 1px solid lightgray; border-radius: 5px; text-decoration: none; font-weight: bold;">
+      Logout
+    </a>
+  {% else %}
+    <a href="{{ url_for('login') }}" style="padding: 8px 12px; background: orange; color: white; border: 1px solid lightgray; border-radius: 5px; text-decoration: none; font-weight: bold;">
+      Login
+    </a>
+    <a href="{{ url_for('signup') }}" style="padding: 8px 12px; background: orange; color: white; border: 1px solid lightgray; border-radius: 5px; text-decoration: none; font-weight: bold;">
+      Sign Up
+    </a>
+  {% endif %}
+</div>
+
     <nav>
   <a href="{{ url_for('home') }}">Home</a>
   <a href="{{ url_for('products') }}">Products</a>

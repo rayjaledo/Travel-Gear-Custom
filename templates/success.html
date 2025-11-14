@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Success</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f3f3f3;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 750px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #ff8c00;
+            margin-bottom: 5px;
+        }
+
+        .details {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th {
+            background-color: #ff8c00;
+            color: white;
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 15px 0;
+        }
+
+        .btn {
+            background-color: #ff8c00;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: #cc7000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>✅ Order Placed Successfully!</h2>
+    <p class="details">Thank you for your purchase, {{ name }}!</p>
+    <p class="details">📞 {{ phone }} | 🏠 {{ address }} | 💳 {{ payment }}</p>
+
+    <h3>Order Summary</h3>
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Subtotal (₱)</th>
+        </tr>
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item.product }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₱{{ "%.2f"|format(item.price * item.quantity) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3 class="total">Total Amount Paid: ₱{{ "%.2f"|format(total) }}</h3>
+    <button class="btn" onclick="window.location.href='/'">Back to Home</button>
+</div>
+
+
+</body>
+</html>

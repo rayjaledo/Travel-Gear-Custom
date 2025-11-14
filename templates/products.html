@@ -2,159 +2,274 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: orange;
-            color: black;
-            padding: 20px;
-            text-align: center;
-        }
-        nav {
-            background: darkgray;
-            padding: 10px;
-        }
-        nav a {
-            color: black;
-            text-decoration: none;
-            padding: 10px 15px;
-            font-size: 18px;
-            margin: 5px;
-            display: inline-block;
-        }
-        nav a:hover {
-            background-color: #bbb;
-            border-radius: 5px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-top: 30px;
-        }
-        .product-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            padding: 20px;
-        }
-        .product {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            padding: 20px;
-            text-align: center;
-            width: 220px;
-        }
-        .product img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        .product h3 {
-            margin: 10px 0 5px;
-        }
-        .product p {
-            color: #666;
-        }
-        button {
-            background: #007BFF;
-            border: none;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        footer {
-            background: orange;
-            color: black;
-            text-align: center;
-            padding: 15px;
-            margin-top: 40px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background: orange;
+        color: black;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+    }
+    nav {
+        background: darkgray;
+        padding: 10px;
+    }
+    nav a {
+    color: white; /* ✅ Default text color is white */
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    margin: 5px;
+    display: inline-block;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    transition: background 0.3s, color 0.3s;
+}
+
+nav a:hover {
+    background-color: yellow; /* 🟨 Background turns yellow */
+    color: black;              /* 🔲 Text turns black */
+}
+    .product-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        padding: 20px;
+    }
+    .product {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        padding: 20px;
+        text-align: center;
+        width: 220px;
+    }
+    .product img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    .product h3 {
+        margin: 10px 0 5px;
+    }
+    .product p {
+        color: #666;
+    }
+
+    /* ✅ Updated Button Styles */
+    button {
+        background: #ff8800; /* Orange */
+        border: none;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        width: 100%; /* Align buttons evenly */
+    }
+    button:hover {
+        background: #e67600; /* Darker orange */
+    }
+</style>
+
 </head>
 <body>
+
 <header>
     <div class="logo" style="position:absolute; top:10px; left:20px;">
         <a href="{{ url_for('home') }}">
-            <img src="{{ url_for('static', filename='logo.jpg') }}" width="150" height="95" alt="Logo">
+            <img src="{{ url_for('static', filename='logo.jpg') }}" width="150" height="88" alt="Logo">
         </a>
-    </div>    <h1>Travel Gear Custom</h1>
-    <nav>
-  <a href="{{ url_for('home') }}">Home</a>
-  <a href="{{ url_for('products') }}">Products</a>
-  <a href="{{ url_for('aboutus') }}">About Us</a>
-  <a href="{{ url_for('contactus') }}">Contact Us</a>
-  <a href="{{ url_for('cart') }}">Cart</a>
-</nav>
+    </div>
+    <h1>TRAVEL GEAR CUSTOM</h1>
 
+        <div style="position:absolute; top:20px; right:20px; display: flex; align-items: center; gap: 10px;">
+  {% if 'username' in session %}
+    <span style="padding: 8px 12px; background: orange; color: white; border: 1px solid lightgray; border-radius: 5px; font-weight: bold;">
+      Welcome, {{ session['username'] }}!
+    </span>
+    <a href="{{ url_for('logout') }}" style="padding: 8px 12px; background: orange; color: white; border: 1px solid lightgray; border-radius: 5px; text-decoration: none; font-weight: bold;">
+      Logout
+    </a>
+  {% else %}
+    <a href="{{ url_for('login') }}" style="padding: 8px 12px; background: orange; color: white; border: 1px solid lightgray; border-radius: 5px; text-decoration: none; font-weight: bold;">
+      Login
+    </a>
+    <a href="{{ url_for('signup') }}" style="padding: 8px 12px; background: orange; color: white; border: 1px solid lightgray; border-radius: 5px; text-decoration: none; font-weight: bold;">
+      Sign Up
+    </a>
+  {% endif %}
+</div>
+
+
+
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('aboutus') }}">About Us</a>
+        <a href="{{ url_for('contactus') }}">Contact Us</a>
+        <a href="{{ url_for('cart') }}">Cart</a>
+    </nav>
 </header>
 
-<h1>Our Products</h1>
+
+<h1 style="text-align:center;">Our Premium Travel Gear</h1>
 
 <div class="product-container">
     <div class="product">
-        <img src="{{ url_for('static', filename='product1.jpg') }}" alt="Product 1">
-        <h3>Product 1</h3>
-        <p>₱150.00</p>
-        <form action="{{ url_for('add_to_cart') }}" method="POST">
-            <input type="hidden" name="product" value="Product 1">
-            <input type="hidden" name="price" value="150">
-            <button type="submit">Add to Cart</button>
-        </form>
+        <img src="{{ url_for('static', filename='product1.jpg') }}" alt="Explorer Backpack">
+        <h3>Explorer Backpack</h3>
+        <p>₱2000.00</p>
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+    <input type="hidden" name="product" value="Explorer Backpack">
+    <input type="hidden" name="price" value="2000">
+    <button type="submit">Add to Cart</button>
+</form>
+
+
     </div>
 
     <div class="product">
-        <img src="{{ url_for('static', filename='product2.jpg') }}" alt="Product 2">
-        <h3>Product 2</h3>
-        <p>₱200.00</p>
-        <form action="{{ url_for('add_to_cart') }}" method="POST">
-            <input type="hidden" name="product" value="Product 2">
-            <input type="hidden" name="price" value="200">
-            <button type="submit">Add to Cart</button>
-        </form>
+        <img src="{{ url_for('static', filename='product2.jpg') }}" alt="Premium Roller">
+        <h3>Premium Roller</h3>
+        <p>₱1500.00</p>
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+    <input type="hidden" name="product" value="Premium Roller">
+    <input type="hidden" name="price" value="1500">
+    <button type="submit">Add to Cart</button>
+</form>
+
+
     </div>
 
     <div class="product">
-        <img src="{{ url_for('static', filename='product3.jpg') }}" alt="Product 3">
-        <h3>Product 3</h3>
+        <img src="{{ url_for('static', filename='product3.jpg') }}" alt="Memory Foam Neck Pillow">
+        <h3>Memory Foam Neck Pillow</h3>
         <p>₱250.00</p>
-        <form action="{{ url_for('add_to_cart') }}" method="POST">
-            <input type="hidden" name="product" value="Product 3">
-            <input type="hidden" name="price" value="250">
-            <button type="submit">Add to Cart</button>
-        </form>
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+    <input type="hidden" name="product" value="Memory Foam Neck Pillow">
+    <input type="hidden" name="price" value="250">
+    <button type="submit">Add to Cart</button>
+</form>
+
     </div>
 
     <div class="product">
-        <img src="{{ url_for('static', filename='product4.jpg') }}" alt="Product 4">
-        <h3>Product 4</h3>
-        <p>₱300.00</p>
-        <form action="{{ url_for('add_to_cart') }}" method="POST">
-            <input type="hidden" name="product" value="Product 4">
-            <input type="hidden" name="price" value="300">
-            <button type="submit">Add to Cart</button>
-        </form>
+        <img src="{{ url_for('static', filename='product4.jpg') }}" alt="Packing Cube Set">
+        <h3>Packing Cube Set</h3>
+        <p>₱2000.00</p>
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+    <input type="hidden" name="product" value="Packing Cube Set">
+    <input type="hidden" name="price" value="2000">
+    <button type="submit">Add to Cart</button>
+</form>
+
     </div>
+
+    <div class="product">
+        <img src="{{ url_for('static', filename='product5.jpg') }}" alt="Sleeping Bag">
+        <h3>Sleeping Bag</h3>
+        <p>₱1000.00</p>
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+    <input type="hidden" name="product" value="Sleeping Bag">
+    <input type="hidden" name="price" value="1000">
+    <button type="submit">Add to Cart</button>
+</form>
+    </div>
+    <div class="product">
+        <img src="{{ url_for('static', filename='product6.jpg') }}" alt="SleepMask">
+        <h3>SleepMask</h3>
+        <p>₱500.00</p>
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+    <input type="hidden" name="product" value="SleepMask">
+    <input type="hidden" name="price" value="500">
+    <button type="submit">Add to Cart</button>
+</form>
+    </div>
+     <div class="product">
+        <img src="{{ url_for('static', filename='product7.jpg') }}" alt="WaterBottle">
+        <h3>WaterBottle</h3>
+        <p>₱500.00</p>
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+    <input type="hidden" name="product" value="WaterBottle">
+    <input type="hidden" name="price" value="500">
+    <button type="submit">Add to Cart</button>
+</form>
+    </div>
+    <div class="product">
+        <img src="{{ url_for('static', filename='product8.jpg') }}" alt="Traveler Jacket">
+        <h3>Traveler Jacket</h3>
+        <p>₱2000.00</p>
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+    <input type="hidden" name="product" value="Traveler Jacket">
+    <input type="hidden" name="price" value="2000">
+    <button type="submit">Add to Cart</button>
+</form>
+    </div>
+    <div class="product">
+        <img src="{{ url_for('static', filename='product9.jpg') }}" alt="Trekking Poles">
+        <h3>Trekking Poles</h3>
+        <p>₱5000.00</p>
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+    <input type="hidden" name="product" value="Trekking Poles">
+    <input type="hidden" name="price" value="5000">
+    <button type="submit">Add to Cart</button>
+</form>
+    </div>
+    <div class="product">
+        <img src="{{ url_for('static', filename='product10.jpg') }}" alt="HikingBackpack">
+        <h3>HikingBackpack</h3>
+        <p>₱2500.00</p>
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+    <input type="hidden" name="product" value="HikingBackpack">
+    <input type="hidden" name="price" value="2500">
+    <button type="submit">Add to Cart</button>
+</form>
+    </div>
+    <div class="product">
+        <img src="{{ url_for('static', filename='product11.jpg') }}" alt="Traveler Pants">
+        <h3>Traveler Pants</h3>
+        <p>₱1500.00</p>
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+    <input type="hidden" name="product" value="Traveler Pants">
+    <input type="hidden" name="price" value="1500">
+    <button type="submit">Add to Cart</button>
+</form>
+    </div>
+    <div class="product">
+        <img src="{{ url_for('static', filename='product12.jpg') }}" alt="Tent">
+        <h3>Tent</h3>
+        <p>₱5000.00</p>
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+    <input type="hidden" name="product" value="Tent">
+    <input type="hidden" name="price" value="5000">
+    <button type="submit">Add to Cart</button>
+</form>
+    </div>
+
 </div>
 
-<footer>
-    <p>&copy; 2025 Travel Gear Custom. All Rights Reserved.</p>
+
+<footer style="
+    background-color: #FFA500;
+    color: #000;
+    text-align: center;
+    padding: 30px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-size: 14px;
+">
+    © 2025 Travel Gear Custom. All Rights Reserved.
 </footer>
 
 </body>

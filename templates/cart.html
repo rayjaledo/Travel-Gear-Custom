@@ -1,52 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart - Travel Gear Custom</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <title>Your Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .cart-container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      width: 60%;
+      text-align: center;
+    }
+    h2 {
+      color: #ff8800;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th {
+      background-color: #ff8800;
+      color: white;
+      padding: 12px;
+      font-weight: bold;
+    }
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+    .total {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    button {
+      background-color: #ff8800;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background-color: #e67600;
+    }
+    .empty-message {
+      padding: 20px;
+      font-size: 16px;
+      color: gray;
+    }
+    .qty-btn {
+      padding: 5px 10px;
+      margin: 0 5px;
+    }
+  </style>
+
+  <!-- Toastify -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 </head>
-
 <body>
-<header>
-  <h1>Shopping Cart</h1>
-</header>
-
-<!-- ✅ Add this navigation bar -->
-<nav>
-  <a href="{{ url_for('home') }}">Home</a>
-  <a href="{{ url_for('products') }}">Products</a>
-  <a href="{{ url_for('aboutus') }}">About Us</a>
-  <a href="{{ url_for('contactus') }}">Contact Us</a>
-  <a href="{{ url_for('cart') }}">Cart</a>
-</nav>
 
 <div class="cart-container">
-  {% if cart %}
-    <table>
-      <tr><th>Product</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th>Actions</th></tr>
-      {% for item in cart %}
+  <h2>Your Cart</h2>
+
+  <table id="cart-table">
+    {% if cart_items|length == 0 %}
+      <tr><td colspan="5" class="empty-message">Your cart is empty.</td></tr>
+    {% else %}
+      <tr>
+        <th>Product</th>
+        <th>Price (₱)</th>
+        <th>Quantity</th>
+        <th>Subtotal (₱)</th>
+        <th>Action</th>
+      </tr>
+
+      {% for item in cart_items %}
       <tr>
         <td>{{ item.product }}</td>
-        <td>₱{{ item.price }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>₱{{ "%.2f"|format(item.price * item.quantity) }}</td>
+        <td>₱{{ "%.2f"|format(item.price) }}</td>
+
         <td>
-          <form method="POST" action="/update_quantity">
-            <input type="hidden" name="product" value="{{ item.product }}">
-            <button name="action" value="increase">+</button>
-            <button name="action" value="decrease">-</button>
+          <form action="/update_quantity/{{ loop.index0 }}/0" method="POST" style="display:inline;">
+            <button type="submit" class="qty-btn" {% if item.quantity <= 1 %}disabled{% endif %}>−</button>
+          </form>
+
+          {{ item.quantity }}
+
+          <form action="/update_quantity/{{ loop.index0 }}/1" method="POST" style="display:inline;">
+            <button type="submit" class="qty-btn">+</button>
           </form>
         </td>
+
+        <td>₱{{ "%.2f"|format(item.price * item.quantity) }}</td>
+
+        <td><button onclick="removeItem({{ loop.index0 }})">Remove</button></td>
       </tr>
       {% endfor %}
-    </table>
-    <h3>Total: ₱{{ "%.2f"|format(total) }}</h3>
-    <a href="/clear_cart">Clear Cart</a>
-  {% else %}
-    <p>Your cart is empty.</p>
+    {% endif %}
+  </table>
+
+  {% if cart_items|length > 0 %}
+    <h3 class="total">Total: ₱{{ "%.2f"|format(total) }}</h3>
   {% endif %}
+
+  <div>
+    <button onclick="window.location.href='/checkout'">Proceed to Checkout</button>
+    <button onclick="clearCart()">Clear Cart</button>
+    <button onclick="goBack()">⬅ Back</button>
+  </div>
 </div>
+
+<script>
+  function removeItem(index) {
+    fetch(`/remove_item/${index}`, { method: 'POST' })
+      .then(() => location.reload());
+  }
+
+  function clearCart() {
+    fetch(`/clear_cart`, { method: 'POST' })
+      .then(() => location.reload());
+  }
+
+  // ✅ FIXED BACK BUTTON — works even with no history
+  function goBack() {
+    if (document.referrer !== "") {
+      window.history.back();
+    } else {
+      window.location.href = "/products"; // fallback page
+    }
+  }
+</script>
 
 </body>
 </html>

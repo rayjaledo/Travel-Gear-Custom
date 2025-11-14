@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .checkout-container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      width: 60%;
+    }
+    h2 {
+      text-align: center;
+      color: #ff8800;
+    }
+    h3 {
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th {
+      background-color: #ff8800;
+      color: white;
+      padding: 12px;
+    }
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      background-color: #ff8800;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      display: block;
+      margin: 20px auto;
+    }
+    button:hover {
+      background-color: #e67600;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="checkout-container">
+  <h2>Checkout</h2>
+
+  <!-- ✅ ORDER SUMMARY AT TOP -->
+  <h3 class="section-title">Order Summary</h3>
+  <table>
+  <tr>
+    <th>Product</th>
+    <th>Quantity</th>
+    <th>Subtotal</th>
+  </tr>
+
+  {% for item in cart_items %}
+  <tr>
+    <td>{{ item.product }}</td>
+    <td>{{ item.quantity }}</td>
+    <td>₱{{ "%.2f"|format(item.price * item.quantity) }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h3>Total: ₱{{ "%.2f"|format(total) }}</h3>
+
+  <hr>
+
+  <!-- ✅ CUSTOMER DETAILS BELOW -->
+  <form action="/process_checkout" method="POST">
+    <label>Full Name:</label>
+    <input type="text" name="name" required>
+
+    <label>Phone Number:</label>
+    <input type="text" name="phone" required>
+
+    <label>Shipping Address:</label>
+    <textarea name="address" required></textarea>
+
+    <label>Payment Method:</label>
+    <select name="payment" required>
+      <option value="Cash on Delivery">Cash on Delivery</option>
+      <option value="GCash">GCash</option>
+      <option value="Credit Card">Credit Card</option>
+    </select>
+
+
+   <div style="text-align:center; margin-top:20px;">
+    <button type="submit" style="margin-center:8px;">Place Order</button>
+    <button type="button" onclick="goBack()">⬅ Back</button>
+  </div>
+</form>
+</form>
+
+</div>
+
+<script>
+  function goBack() {
+    if (document.referrer !== "") {
+      window.history.back();
+    } else {
+      window.location.href = "/cart"; // fallback if no history
+    }
+  }
+</script>
+
+
+
+</body>
+</html>
